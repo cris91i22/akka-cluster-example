@@ -17,6 +17,7 @@ class UserPersistenceActor extends BasePersistenceActor(new BaseDao {}) {
   override val applyProtocol: Actor.Receive = {
     case Save =>
       log.info("Save Mocked data")
+      Thread.sleep(1000L)
       handleDummieFuture() pipeTo sender
 
   }
