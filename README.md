@@ -16,16 +16,17 @@ Note.: It's required first of all launch persistence nodes before launch http no
 Example:
 
 Launch persistence nodes:
+```
 - project persistence
 - runMain com.akka.cluster.persistence.Boot 2551
 - runMain com.akka.cluster.persistence.Boot 2552
+```
 
 Launch http nodes:
+```
 - project http
 - runMain com.akka.cluster.Main
-
-
-
+```
 
 //TODO
 
