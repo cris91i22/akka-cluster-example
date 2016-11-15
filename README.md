@@ -11,9 +11,9 @@ Http nodes doesn't see each others, but persistence nodes they does.
 // Graphic to demonstrate the explanation
 
 
-Note.: It's required first of all launch persistence nodes before launch http nodes.
+**Note.:** It's required first of all launch persistence nodes before launch http nodes.
 
-Example:
+### Example:
 
 Launch persistence nodes:
 ```
@@ -28,7 +28,7 @@ Launch http nodes:
 - runMain com.akka.cluster.Main
 ```
 
-//TODO
+### Tasks to do
 
 - Implement router into http sub module.
 - Logs.
