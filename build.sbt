@@ -40,7 +40,8 @@ lazy val http = project.in( file("./http"))
       "org.json4s" %% "json4s-jackson" % "3.2.11",
       "joda-time"  % "joda-time" % "2.7",
       "org.slf4j"  % "slf4j-log4j12" % "1.7.21",
-      "de.heikoseeberger" %% "akka-http-json4s" % "1.4.1"
+      "de.heikoseeberger" %% "akka-http-json4s" % "1.4.1",
+      "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.3" % "test"
     )
   ).dependsOn(persistence)
 
