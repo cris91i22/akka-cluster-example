@@ -32,6 +32,7 @@ lazy val persistence = project.in(file("./persistence"))
 
 lazy val http = project.in( file("./http"))
   .settings(commonSettings: _*)
+  .enablePlugins(GatlingPlugin)
   .settings(
     name := "http",
     libraryDependencies ++= Seq(
@@ -41,13 +42,14 @@ lazy val http = project.in( file("./http"))
       "joda-time"  % "joda-time" % "2.7",
       "org.slf4j"  % "slf4j-log4j12" % "1.7.21",
       "de.heikoseeberger" %% "akka-http-json4s" % "1.4.1",
-      "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.3" % "test",
-      "io.gatling"            % "gatling-test-framework"    % "2.2.3" % "test"
+      "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.1.7" % "test",
+      "io.gatling"            % "gatling-test-framework"    % "2.1.7" % "test"
     )
   ).dependsOn(persistence)
 
+scalacOptions in Test ++= Seq("-Yrangepos")
+
 lazy val root =
   project.in( file("."))
-    .enablePlugins(GatlingPlugin)
     .aggregate(http)
     .settings(name := "akka-cluster-example")

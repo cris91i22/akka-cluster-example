@@ -15,7 +15,7 @@ trait UserRoutes extends AutoMarshaller with Results {
   val userService: ActorRef
   implicit val userServiceTimeout: Timeout
 
-  val create = (pathEnd & get) {
+  val create = (pathEnd & post) {
     entity(as[UserRequest]) { record =>
       implicit val tryHandler: PartialFunction[Try[Int], StandardRoute] = {
         case Success(r) => complete(Created, Map("id" -> r))

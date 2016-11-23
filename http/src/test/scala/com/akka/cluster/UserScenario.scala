@@ -8,16 +8,19 @@ import io.gatling.http.Predef._
 class UserScenario extends Simulation {
 
   val httpConf = http
-    .baseURL("http://localhost:9000")
+    .baseURL("http://127.0.0.1:9000")
 
   val scn = scenario("User")
     .exec(http("create")
       .post("/user")
       .body(StringBody("""{"name": "a", "genre": "b"}"""))
       .header("Content-Type", "application/json")
-      .check(jsonPath("id").saveAs("userId"), status.is(200))
-    )
-
+      .check(jsonPath("$.id").saveAs("userId"), status.is(201))
+    ).exec(session => {
+      val maybeId = session.get("userId").asOption[String]
+      println(maybeId.getOrElse("COULD NOT FIND ID"))
+      session
+    })
 
   setUp(
     scn.inject(
