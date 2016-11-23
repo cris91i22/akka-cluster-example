@@ -1,0 +1,6 @@
+#!/bin/bash
+gnome-terminal --tab --command="sbt \"project persistence\" \"~ runMain com.akka.cluster.persistence.Boot 2551\""
+sleep 5
+gnome-terminal --tab --command="sbt \"project persistence\" \"~ runMain com.akka.cluster.persistence.Boot 2552\""
+sleep 5
+gnome-terminal --tab --command="sbt \"project http\" \"~ runMain com.akka.cluster.Main\""
