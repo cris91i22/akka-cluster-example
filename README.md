@@ -38,3 +38,5 @@ Launch http nodes:
 - Business logic, In which sub module?
 - Configure weakly up members and test it.
 - Implement mongodb database
+- Sharding
+- Akka persistence
