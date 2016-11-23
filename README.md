@@ -15,6 +15,8 @@ Http nodes doesn't see each others, but persistence nodes they does.
 
 ### Example:
 
+**If you want to use ./loadApp script, this one replace the code below to launch all nodes.**
+
 Launch persistence nodes:
 ```
 - project persistence
