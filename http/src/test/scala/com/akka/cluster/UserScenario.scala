@@ -18,7 +18,9 @@ class UserScenario extends Simulation {
       .check(jsonPath("$.id").saveAs("userId"), status.is(201))
     ).exec(session => {
       val maybeId = session.get("userId").asOption[String]
-      println(maybeId.getOrElse("COULD NOT FIND ID"))
+      http("create")
+        .get(s"/user/${maybeId.get}")
+        .check(status.is(200))
       session
     })
 
