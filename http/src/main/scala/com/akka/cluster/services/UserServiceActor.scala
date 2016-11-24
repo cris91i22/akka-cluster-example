@@ -1,30 +1,24 @@
 package com.akka.cluster.services
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Terminated}
+import akka.routing._
 import com.akka.cluster.api.request.UserRequest
 import com.akka.cluster.persistence.services.protocol._
 import com.akka.cluster.services.UserServiceActor._
 
-class UserServiceActor extends Actor with ActorLogging {
+import scala.collection.immutable.IndexedSeq
 
-  private var userPersistenceActors = IndexedSeq.empty[ActorRef] //TODO IMPLEMENT ROUTER
-  private var counter = 0
+class UserServiceActor extends BaseRouterActor {
 
-  override def receive: Actor.Receive = {
-    case CreateUser(_) if userPersistenceActors.isEmpty => sender() ! TaskFailed("Service unavailable")
-    case msg@CreateUser(r) =>
-      counter += 1
-      userPersistenceActors(counter % userPersistenceActors.size) forward Save //msg
-    case RegisteredNode if !userPersistenceActors.contains(sender()) =>
-      context watch sender()
-      log.debug("Actor registered: " + sender().path)
-      userPersistenceActors = userPersistenceActors :+ sender()
-    case Terminated(a) =>
-      log.debug("Removing actor {}", a)
-      userPersistenceActors = userPersistenceActors.filterNot(_ == a)
-    case UnRegisteredNode =>
-      log.debug("Removing actor {}", sender())
-      userPersistenceActors = userPersistenceActors.filterNot(_ == sender())
+  override protected val userPersistenceActors: IndexedSeq[Routee] = IndexedSeq.empty
+
+  // DOC in: http://doc.akka.io/docs/akka/2.4.10/scala/routing.html
+  override var router = Router(RoundRobinRoutingLogic(), userPersistenceActors)
+
+  override protected def applyProtocol: Receive = {
+    case _ if router.routees.isEmpty => log.warning("Don't found any user persistence actor...")
+      sender() ! TaskFailed("Service unavailable")
+    case msg@CreateUser(r) => router.route(Save, sender())
+    case GetUser(id) => router.route(Get(id), sender())
   }
 
 }
@@ -32,5 +26,6 @@ class UserServiceActor extends Actor with ActorLogging {
 object UserServiceActor {
 
   case class CreateUser(request: UserRequest)
+  case class GetUser(id: String)
 
 }
