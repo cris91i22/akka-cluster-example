@@ -8,8 +8,7 @@ can be launched, those nodes with the http nodes make up a cluster.
 
 Http nodes doesn't see each others, but persistence nodes they does.
 
-// Graphic to demonstrate the explanation
-
+**Graphic to demonstrate how is the cluster -> https://github.com/cris91i22/akka-cluster-example/blob/router/cluster-graphic.jpg**
 
 **Note.:** It's required first of all launch persistence nodes before launch http nodes.
 
@@ -32,11 +31,9 @@ Launch http nodes:
 
 ### Tasks to do
 
-- Implement router into http sub module.
-- Logs.
-- Gatling, stress test.
+- Implement mongodb database
 - Business logic, In which sub module?
 - Configure weakly up members and test it.
-- Implement mongodb database
 - Sharding
 - Akka persistence
+- Logs.

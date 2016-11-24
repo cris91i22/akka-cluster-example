@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
-class UserScenario extends Simulation {
+class UserSimulation extends Simulation {
 
   val httpConf = http
     .baseURL("http://127.0.0.1:9000")
@@ -17,9 +17,9 @@ class UserScenario extends Simulation {
       .header("Content-Type", "application/json")
       .check(jsonPath("$.id").saveAs("userId"), status.is(201))
     ).exec(session => {
-      val maybeId = session.get("userId").asOption[String]
+      val id = session.get("userId").as[String]
       http("create")
-        .get(s"/user/${maybeId.get}")
+        .get(s"/user/$id")
         .check(status.is(200))
       session
     })

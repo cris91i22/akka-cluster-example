@@ -13,17 +13,11 @@ class UserServiceActor extends BaseRouterActor {
 
   // DOC in: http://doc.akka.io/docs/akka/2.4.10/scala/routing.html
   override var router = Router(RoundRobinRoutingLogic(), userPersistenceActors)
-// override var router = Router(SmallestMailboxRoutingLogic(), userPersistenceActors)
 
   override protected def applyProtocol: Receive = {
-    case CreateUser(_) if router.routees.isEmpty =>
-      log.warning("Don't found any user persistence actor...")
+    case _ if router.routees.isEmpty => log.warning("Don't found any user persistence actor...")
       sender() ! TaskFailed("Service unavailable")
-    case GetUser(_) if router.routees.isEmpty =>
-      log.warning("Don't found any user persistence actor...")
-      sender() ! TaskFailed("Service unavailable")
-    case msg@CreateUser(r) =>
-      router.route(Save, sender())
+    case msg@CreateUser(r) => router.route(Save, sender())
     case GetUser(id) => router.route(Get(id), sender())
   }
 
