@@ -9,7 +9,7 @@ can be launched, those nodes with the http nodes make up a cluster.
 Http nodes doesn't see each others, but persistence nodes they does.
 
 **Graphic to demonstrate how is the cluster**
-![alt tag](https://github.com/cris91i22/akka-cluster-example/blob/router/cluster-graphic.jpg)
+![alt tag](https://github.com/cris91i22/akka-cluster-example/blob/master/cluster-graphic.jpg)
 
 **Note.:** It's required first of all launch persistence nodes before launch http nodes.
 
