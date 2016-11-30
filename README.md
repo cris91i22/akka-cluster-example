@@ -32,7 +32,6 @@ Launch http nodes:
 
 ### Tasks to do
 
-- Implement mongodb database
 - Business logic, In which sub module?
 - Configure weakly up members and test it.
 - Sharding

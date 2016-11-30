@@ -2,6 +2,7 @@ package com.akka.cluster.persistence
 
 import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.event.Logging
+import com.akka.cluster.persistence.repository.UserRepository
 import com.akka.cluster.persistence.services.UserPersistenceActor
 import com.akka.cluster.persistence.services.protocol.ShutDown
 import com.typesafe.config.{Config, ConfigFactory}
@@ -20,7 +21,7 @@ object Boot extends App {
   log.info("Remote Role: " + config.getList("akka.cluster.roles"))
 
   val actorsRegistration: Vector[ActorRef] = {
-    Vector(system.actorOf(Props[UserPersistenceActor], name = "userPersistence"))
+    Vector(system.actorOf(UserPersistenceActor.props(UserRepository()), name = "userPersistence"))
   }
 
   system.registerOnTermination(System.exit(-1))

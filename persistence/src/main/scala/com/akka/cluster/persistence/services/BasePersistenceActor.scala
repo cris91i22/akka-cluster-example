@@ -3,10 +3,9 @@ package com.akka.cluster.persistence.services
 import akka.actor.{Actor, ActorLogging, RootActorPath}
 import akka.cluster.ClusterEvent.{MemberUp, _}
 import akka.cluster.{Cluster, Member, MemberStatus}
-import com.akka.cluster.persistence.dao.BaseDao
 import com.akka.cluster.persistence.services.protocol._
 
-abstract class BasePersistenceActor(dao: BaseDao) extends Actor with ActorLogging {
+abstract class BasePersistenceActor extends Actor with ActorLogging {
 
   protected val cluster = Cluster(context.system)
 
